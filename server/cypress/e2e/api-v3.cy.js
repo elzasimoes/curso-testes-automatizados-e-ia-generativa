@@ -13,15 +13,15 @@ describe('GET /customers API', () => {
         // Assert
         const { customers, pageInfo } = body
         expect(status).to.eq(200)
-        expect(customers).to.be.an('array')
+        expect(Array.isArray(customers)).to.be.true
         customers.forEach(({ id, name, employees, contactInfo, size, industry, address }) => {
           expect(id).to.be.a('number')
           expect(name).to.be.a('string')
           expect(employees).to.be.a('number')
           expect(['Small', 'Medium', 'Enterprise', 'Large Enterprise', 'Very Large Enterprise']).to.include(size)
           expect(['Logistics', 'Retail', 'Technology', 'HR', 'Finance']).to.include(industry)
-          expect(contactInfo === null || (typeof contactInfo === 'object' && contactInfo.name && contactInfo.email)).to.be.true
-          expect(address === null || (typeof address === 'object' && address.street && address.city && address.state && address.zipCode && address.country)).to.be.true
+          expect(!!(contactInfo === null || (typeof contactInfo === 'object' && contactInfo.name && contactInfo.email))).to.be.true
+          expect(!!(address === null || (typeof address === 'object' && address.street && address.city && address.state && address.zipCode && address.country))).to.be.true
         })
         expect(pageInfo).to.have.all.keys('currentPage', 'totalPages', 'totalCustomers')
         expect(pageInfo.currentPage).to.be.a('number')
@@ -39,6 +39,7 @@ describe('GET /customers API', () => {
         // Assert
         const { customers } = body
         expect(status).to.eq(200)
+        expect(Array.isArray(customers)).to.be.true
         customers.forEach(({ size, employees }) => {
           expect(size).to.eq('Medium')
           expect(employees).to.be.gte(100)
@@ -56,6 +57,7 @@ describe('GET /customers API', () => {
         // Assert
         const { customers } = body
         expect(status).to.eq(200)
+        expect(Array.isArray(customers)).to.be.true
         customers.forEach(({ size, employees }) => {
           expect(size).to.eq('Enterprise')
           expect(employees).to.be.gte(1000)
@@ -73,6 +75,7 @@ describe('GET /customers API', () => {
         // Assert
         const { customers } = body
         expect(status).to.eq(200)
+        expect(Array.isArray(customers)).to.be.true
         customers.forEach(({ industry }) => {
           expect(industry).to.eq('Technology')
         })
@@ -88,6 +91,7 @@ describe('GET /customers API', () => {
         // Assert
         const { customers } = body
         expect(status).to.eq(200)
+        expect(Array.isArray(customers)).to.be.true
         customers.forEach(({ industry }) => {
           expect(industry).to.eq('HR')
         })
@@ -103,6 +107,7 @@ describe('GET /customers API', () => {
         // Assert
         const { customers } = body
         expect(status).to.eq(200)
+        expect(Array.isArray(customers)).to.be.true
         customers.forEach(({ size, employees }) => {
           expect(size).to.eq('Large Enterprise')
           expect(employees).to.be.gte(10000)
@@ -120,6 +125,7 @@ describe('GET /customers API', () => {
         // Assert
         const { customers } = body
         expect(status).to.eq(200)
+        expect(Array.isArray(customers)).to.be.true
         customers.forEach(({ size, employees }) => {
           expect(size).to.eq('Very Large Enterprise')
           expect(employees).to.be.gte(50000)
@@ -149,6 +155,7 @@ describe('GET /customers API', () => {
         // Assert
         const { customers } = body
         expect(status).to.eq(200)
+        expect(Array.isArray(customers)).to.be.true
         expect(customers.length).to.be.at.most(limit)
       })
     })
